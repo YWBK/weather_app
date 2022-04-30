@@ -1,8 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import Root from "./components/root";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const root = document.getElementById("root");
-  ReactDOM.render(<Root />, root);
+  const container = document.getElementById("root");
+  const root = ReactDOM.createRoot(container)
+  root.render(<Root />);
 });
