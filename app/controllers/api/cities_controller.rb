@@ -5,6 +5,7 @@ class Api::CitiesController < ApplicationController
 
   def show
     city = params[:city]
+    state = params[:state] if params[:state]
     key = Rails.application.credentials.open_weather[:api_key]
     url = "http://api.openweathermap.org/geo/1.0/direct?q=#{city}&limit=5&appid=#{key}"
     res = RestClient.get(url)
