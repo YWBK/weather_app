@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
+import createStore from "runtime-memcache";
 import { fetchCities } from "../util/city_api_util";
 import { fetchWeather } from "../util/weather_api_util";
 
-const CityCard = () => {
-  const [query, setQuery] = React.useState("");
+const CityCard = ({ cityHolder }) => {
+  const [query, setQuery] = React.useState(cityHolder);
   const [options, setOptions] = React.useState([]);
   const [selectedCity, setSelectedCity] = React.useState("");
   const [weather, setWeather] = React.useState("");
   const [temp, setTemp] = React.useState("");
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    setQuery("");
+  useEffect(() => {
+    prepopulateCard();
+  }, []);
+
+  const prepopulateCard = () => {
+    return fetchCities(query).then(res => {
+      setQuery("");
+      const cityName = concatCityName(res[0]);
+      const geo = [res[0]['lat'], res[0]['lon']];
+      return handleSelect(geo, cityName);
+    })
+  }
+
+  const getCities = () => {
     fetchCities(query).then(res => {
+      setQuery("");
       return setOptions(
         res.map(cityGeo => {
-
-          const cityName = cityGeo['state'] 
-            ? `${cityGeo['name']}, ${cityGeo['state']}, ${cityGeo['country']}`
-            : `${cityGeo['name']}, ${cityGeo['country']}`;
+          const cityName = concatCityName(cityGeo);
           const geo = [cityGeo['lat'], cityGeo['lon']]
           return { cityName: cityName, geo: geo}
         })
@@ -26,8 +36,19 @@ const CityCard = () => {
     })
   }
 
-  const handleSelect = (e, geo, city)  => {
+  const concatCityName = (cityGeo) => {
+    return (cityGeo['state']
+      ? `${cityGeo['name']}, ${cityGeo['state']}, ${cityGeo['country']}`
+      : `${cityGeo['name']}, ${cityGeo['country']}`
+    );
+  }
+
+  const handleSubmit = e => {
     e.preventDefault();
+    return getCities();
+  }
+
+  const handleSelect = (geo, city)  => {
     setOptions([]);
     return fetchWeather(geo)
       .then(res => {
@@ -44,7 +65,7 @@ const CityCard = () => {
 
   return (
     <React.Fragment>
-        <div>
+      <div>
         <input 
           type="text" 
           placeholder="Search city"
@@ -60,7 +81,7 @@ const CityCard = () => {
           return (
             <li 
               key={idx}
-              onClick={ e => handleSelect(e, option.geo, option.cityName) } >
+              onClick={ () => handleSelect(option.geo, option.cityName) } >
                 {option.cityName}
             </li>
           )
