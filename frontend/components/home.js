@@ -1,16 +1,16 @@
 import React from "react";
-import Link from "react-router-dom"
+import Link from "react-router-dom";
+import CityCard from "./city_card";
 
 const Home = () => {
   return (
     <React.Fragment>
       <h1>Weather App</h1>
-      <input 
-        type="text" 
-        placeholder="Search city" />
-      <input 
-        type="submit"
-        value="Search" />
+      <CityCard />
+      <CityCard />
+      <CityCard />
+      <CityCard />
+      <CityCard />
     </React.Fragment>
   )
 }
