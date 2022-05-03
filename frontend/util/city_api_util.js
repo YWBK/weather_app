@@ -1,3 +1,4 @@
+
 export const fetchCities = query => {
   const cityStateCountry = query.split(",").map(part => part.trim());
   let city, state, country;
@@ -14,7 +15,6 @@ export const fetchCities = query => {
     default:
       break;
   }
-
   const stateQuery = state ? `&state=${state}` : '';
   const countryQuery = country ? `&country=${country}` : '';
 

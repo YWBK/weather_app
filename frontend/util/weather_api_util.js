@@ -5,3 +5,11 @@ export const fetchWeather = geo => {
     url: `api/weather?lat=${lat}&lon=${lon}`
   }))
 }
+
+export const fetchForecast = cityId => {
+  const id = cityId.substring(1);
+  return ($.ajax({
+    method: 'GET',
+    url: `api/weather?cityId=${id}`
+  }))
+}
