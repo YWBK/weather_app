@@ -1,21 +1,34 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Modal from "react-modal";
 import createStore from "runtime-memcache";
+import Loading from "./loading"
 import { fetchCities } from "../util/city_api_util";
 import { fetchWeather } from "../util/weather_api_util";
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: '25%',
+    bottom: '25%',
+    transform: 'translate(-50%, -50%)',
+  },
+}
 
 const CityCard = ({ idx, cityHolder }) => {
   const [query, setQuery] = React.useState(cityHolder);
   const [options, setOptions] = React.useState([]);
-  const [selectedCity, setSelectedCity] = React.useState("");
-  const [cityId, setCityId] = React.useState([]);
-  const [weather, setWeather] = React.useState("");
-  const [temp, setTemp] = React.useState("");
-  const [icon, setIcon] = React.useState("");
+  const [weatherData, setWeatherData] = React.useState({});
+  const [loading, setLoading] = React.useState(true);
+  const [modalIsOpen, setIsOpen] = React.useState(false);
 
   useEffect(() => {
     prepopulateCard();
   }, []);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const prepopulateCard = () => {
     return fetchCities(query).then(res => {
@@ -51,15 +64,29 @@ const CityCard = ({ idx, cityHolder }) => {
     return getCities();
   }
 
+  const handleEnter = e => {
+    if (e.key === 'Enter') {
+      e.target.blur();
+      return handleSubmit(e);
+    }
+  }
+
   const handleSelect = (geo, city)  => {
     setOptions([]);
     return fetchWeather(geo)
       .then(res => {
-        setSelectedCity(city);
-        setCityId(res.id);
-        setWeather(res.weather[0].main);
-        setTemp(kelvinToFahrenheit(res.main.temp));
-        setIcon(res.weather[0].icon);
+        setWeatherData({
+          location: city,
+          id: res.id,
+          main: res.weather[0].main,
+          icon: res.weather[0].icon,
+          temp: kelvinToFahrenheit(res.main.temp)
+        })
+        closeModal();
+        setLoading(true);
+        return setTimeout(() => {
+          setLoading(false);
+        }, "200");
       })
   }
 
@@ -72,43 +99,63 @@ const CityCard = ({ idx, cityHolder }) => {
     <div
       className="city-card"
       id={`card-${idx}`} >
-        <div 
-          className="search">
-            <input 
-              type="text" 
-              placeholder="Search city"
-              value={query}
-              onChange={ e => setQuery(e.currentTarget.value) } />
-            <input 
-              type="submit"
-              value="Search" 
-              onClick={ e => handleSubmit(e) } />
-        </div>
-        <ul className="search-options">
-          { options.map((option, idx) => {
-            return (
-              <li 
-                key={idx}
-                onClick={ () => handleSelect(option.geo, option.cityName) } >
-                  {option.cityName}
-              </li>
-            )
-          })}
-        </ul>
-        <div
-          className="card-summary" >
-            <h2>{selectedCity}</h2>
-            <h4>{temp} {temp ? '°F' : ''}</h4>
-            <img src={`http://openweathermap.org/img/w/${icon}.png`} alt={weather}/>
-            <h4>{weather}</h4>
-            <h4>
-              <Link 
-                to={`/${cityId}`} 
-                className="detail-link">
-                  See details
-              </Link>
-            </h4>
-        </div>
+        { loading 
+          ? <Loading />
+          : <React.Fragment>
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              style={customStyles}
+              contentLabel="Example Modal" >
+                <div 
+                  className="search">
+                    <input 
+                      type="text" 
+                      placeholder="Search city"
+                      value={query}
+                      onKeyDown={ e => handleEnter(e) }
+                      onChange={ e => setQuery(e.currentTarget.value) } />
+                    <input 
+                      type="submit"
+                      value="Search" 
+                      onClick={ e => handleSubmit(e) } />
+                </div>
+                <ul className="search-options">
+                  { options.map((option, idx) => {
+                    return (
+                      <li 
+                        key={idx}
+                        onClick={ () => handleSelect(option.geo, option.cityName) } >
+                          {option.cityName}
+                      </li>
+                    )
+                  })}
+                </ul>
+              </Modal>
+              <div
+                className="card-summary" >
+                  <h2>
+                    <Link 
+                      to={{
+                        pathname: `/${weatherData.id}`,
+                        state: {
+                          weatherData: weatherData
+                        }
+                      }} 
+                      className="detail-link" >
+                      {weatherData.location}
+                    </Link>
+                  </h2> 
+                  <h4>{weatherData.temp} {weatherData.temp ? '°F' : ''}</h4>
+                  <img src={`http://openweathermap.org/img/w/${weatherData.icon}.png`} alt={weatherData.weather}/>
+                  <h4 
+                    className="modal-open"
+                    onClick={openModal} >
+                    Search different city
+                  </h4>
+              </div>
+            </React.Fragment>     
+        }
     </div>
   )
 }

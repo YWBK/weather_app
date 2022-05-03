@@ -6,17 +6,7 @@ import Error from "./error";
 
 
 const App = () => {
-  const [err, setErr] = React.useState(false);
-
-  const location = useLocation();
-
-  useEffect(location => {
-    // debugger;
-  })
-
-  // if location includes includes anything not accepted, setErr to true
-
-  return ( // err ? render error component : render the switch
+  return (
     <div>
       <Switch>
         <Route exact path="/" component={Home} />

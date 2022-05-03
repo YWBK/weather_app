@@ -1,4 +1,5 @@
 input {
+  flex-grow: 2;
   border: none;
   border-radius: 0.4em;
   &:focus {
@@ -7,6 +8,8 @@ input {
 }
 
 input[type=submit] {
+  flex-grow: 1;
+  margin-left: 0.5em;
   background-color: $light-gray;
   border: none;
   border-radius: 0.4em;
@@ -46,6 +49,10 @@ input[type=submit] {
   h2 {
     font-size: 1.1rem;
   }
+
+  h4 {
+    cursor: default;
+  }
 }
 
 .search-options {
@@ -53,7 +60,7 @@ input[type=submit] {
   background: $white;
   border-radius: 0.4em;
   color: $black;
-  width: 14.5em;
+  width: 21em;
 
   li {
     padding: 0.3em;
@@ -67,15 +74,17 @@ input[type=submit] {
   }
 }
 
-.detail-link {
-  font-size: 0.7rem;
+.detail-link, .modal-open {
   text-decoration: none;
   color: $white;
-  margin-top: 1em;
   transition: 0.2s;
 
   &:hover {
     cursor: pointer;
     color: $dark-gray;
   }
+}
+
+.modal-open {
+  font-size: 0.7rem;
 }

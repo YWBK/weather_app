@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>WeatherApp</title>
+    <title>Weather</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <meta property="og:title" content="Free Weather App" />
+    <meta property="og:description"
+       content="A free weather app that allows you to view weather in 5 different cities."
+    />
+
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <%= favicon_link_tag 'weather_icon.png' %>
+
 
     <script type="text/javascript">
       window.weatherAPIKey = "<%= Rails.application.credentials.open_weather[:api_key] %>"
