@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "react-router-dom";
+import Navbar from "./navbar";
 import CityCard from "./city_card";
 
 const Home = () => {
@@ -12,9 +12,12 @@ const Home = () => {
 
   return (
     <React.Fragment>
-      <h1>Weather App</h1>
+      <Navbar />
       {nyc.map((borough, idx) => (
-        <CityCard key={idx} cityHolder={borough} />  
+        <CityCard 
+          key={idx}
+          idx={idx}
+          cityHolder={borough} />  
     ))}
     </React.Fragment>
   )

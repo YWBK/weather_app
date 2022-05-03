@@ -1,0 +1,81 @@
+input {
+  border: none;
+  border-radius: 0.4em;
+  &:focus {
+    outline: 1px solid $darker-blue;
+  }
+}
+
+input[type=submit] {
+  background-color: $light-gray;
+  border: none;
+  border-radius: 0.4em;
+  outline: none;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $dark-gray;
+  }
+}
+
+.city-card {
+  border-radius: 0.5em;
+  margin: 2em 1em 0 1em;
+  padding: 1em;
+
+  background-color: $dark-blue;
+  color: $white;
+}
+
+.search {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+}
+
+.card-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  h2, h4 {
+    margin-top: 0.4em;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+}
+
+.search-options {
+  position: absolute;
+  background: $white;
+  border-radius: 0.4em;
+  color: $black;
+  width: 14.5em;
+
+  li {
+    padding: 0.3em;
+    transition: 0.2s;
+
+    &:hover {
+      background-color: $dark-gray;
+      border-radius: 0.4em;
+      cursor: pointer;
+    }
+  }
+}
+
+.detail-link {
+  font-size: 0.7rem;
+  text-decoration: none;
+  color: $white;
+  margin-top: 1em;
+  transition: 0.2s;
+
+  &:hover {
+    cursor: pointer;
+    color: $dark-gray;
+  }
+}
