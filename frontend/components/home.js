@@ -16,7 +16,7 @@ const Home = () => {
     // "Queens, NY", 
     // "Brooklyn, NY", 
     // "Bronx, NY", 
-    "Staten Island, NY"];
+    "Staten Island, NY, US"];
 
   return (
     <React.Fragment>

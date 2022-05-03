@@ -1,20 +1,23 @@
 import React, { useEffect, useInsertionEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "./navbar";
+import { fetchForecast } from "../util/weather_api_util";
+
 
 const Show = () => {
   let location = useLocation();
-  // const { weatherData } = location?.state;
+  const [weatherData, setWeatherData] = React.useState(location.state?.weatherData);
 
-  // useEffect(() => {
-  //   if (weatherData) {
-  //     debugger
-  //   }
-  //   else {
-  //     // let pathname = location.pathname
-  //     debugger
-  //   }
-  // }, [location])
+  useEffect(() => {
+    getForecast();
+  }, [location])
+
+  const getForecast = () => {
+    return fetchForecast(location.pathname).then(res => {
+      debugger
+    })
+  }
+
 
 
   return (

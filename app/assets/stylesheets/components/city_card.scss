@@ -1,5 +1,6 @@
 input {
   flex-grow: 2;
+  margin-bottom: 0.5em;
   border: none;
   border-radius: 0.4em;
   &:focus {
@@ -33,6 +34,7 @@ input[type=submit] {
 
 .search {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 0.5em;
 }
@@ -60,11 +62,16 @@ input[type=submit] {
   background: $white;
   border-radius: 0.4em;
   color: $black;
-  width: 21em;
+  width: 90%;
 
   li {
+    margin-right: 1em;
     padding: 0.3em;
     transition: 0.2s;
+
+    &:last-of-type {
+      margin-bottom: 1em;
+    }
 
     &:hover {
       background-color: $dark-gray;
