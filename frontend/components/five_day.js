@@ -1,9 +1,9 @@
 import React from "react";
-import { convertWindDir } from "../util/functions_util";
+import { convertWindDir, getDayAndDate } from "../util/functions_util";
 
 
 const FiveDay = ({day}) => {
-  let date = day.dt_txt.slice(0,10);
+  let date = getDayAndDate(day.dt_txt.slice(0,10));
   let temp = Math.round(day.main.temp);
   let icon = day.weather[0].icon;
   let desc = day.weather[0].main;

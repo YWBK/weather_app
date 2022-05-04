@@ -37,3 +37,16 @@ export const convertWindDir = deg => {
     return 'NW';
   }
 }
+
+export const getDayAndDate = fullDate => {
+  const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  let d = new Date(fullDate);
+  let day = days[d.getDay()];
+  let date = fullDate.slice(8);
+  return `${day} ${date}`;
+}
+
+export const getTime = timestamp => {
+  let d = new Date(timestamp * 1000);
+  return d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric' });
+}
