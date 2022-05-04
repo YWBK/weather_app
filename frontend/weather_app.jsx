@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import library from "./library/library";
 import Root from "./components/root";
 import Modal from "react-modal";
 

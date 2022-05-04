@@ -1,6 +1,6 @@
 import React from "react";
 import { convertWindDir, getDayAndDate } from "../util/functions_util";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 
 const FiveDay = ({day}) => {
   let date = getDayAndDate(day.dt_txt.slice(0,10));
@@ -19,8 +19,18 @@ const FiveDay = ({day}) => {
         <img src={`http://openweathermap.org/img/w/${icon}.png`} alt={desc}/>
         <div>{ desc }</div>
       </div>
-      <div>{ precip } %</div>
-      <div>{ windDir } { windSpeed } mph</div>
+      <div>
+        <FontAwesomeIcon 
+          icon="fa-solid fa-cloud-showers-heavy"
+          className="icon" /> 
+        { precip } %
+      </div>
+      <div>
+        <FontAwesomeIcon 
+          icon="fa-solid fa-wind"
+          className="icon" /> 
+        { windDir } { windSpeed } mph
+      </div>
     </li>
 
   )

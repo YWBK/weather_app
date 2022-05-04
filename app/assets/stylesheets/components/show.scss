@@ -29,6 +29,10 @@
   padding: 0.5em 0 0.5em 0;
 }
 
+.detail-high-low {
+  margin-right: 0.5em;
+}
+
 .detail-caption {
   flex-grow: 1;
 }
@@ -57,4 +61,8 @@
     align-items: center;
     justify-content: center;
   }
+}
+
+.icon {
+  margin-right: 0.5em;
 }
