@@ -27,6 +27,7 @@ const NavSearch = () => {
   }, [query])
 
   const closeList = e => {
+    setQuery("");
     if (optionsList.current 
       && listOpen 
       && !optionsList.current.contains(e.target)) {
@@ -52,10 +53,11 @@ const NavSearch = () => {
           type="text"
           placeholder="search city"
           value={query}
+          className="nav-search-bar"
           onChange={ e => setQuery(e.currentTarget.value)}
         />
         { listOpen
-            ? <ul className="search-options" ref={optionsList}>
+            ? <ul className="nav-search-options" ref={optionsList}>
                 { options.map((option, i) => {
                   return (
                     <li 
