@@ -54,6 +54,9 @@ const Show = () => {
   const getCurrWeather = geo => {
     return fetchWeather(geo).then(res => {
       setCurrWeather({
+        temp: res.main.temp,
+        icon: `http://openweathermap.org/img/w/${res.weather[0].icon}.png`,
+        main: res.weather[0].main,
         sunrise: getTime(res.sys.sunrise),
         sunset: getTime(res.sys.sunset),
         feel: res.main.feels_like,
