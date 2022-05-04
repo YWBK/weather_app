@@ -45,3 +45,8 @@ export const getDayAndDate = fullDate => {
   let date = fullDate.slice(8);
   return `${day} ${date}`;
 }
+
+export const getTime = timestamp => {
+  let d = new Date(timestamp * 1000);
+  return d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric' });
+}

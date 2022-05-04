@@ -1,13 +1,16 @@
 import React, { useEffect, useInsertionEffect } from "react";
 import { useLocation } from "react-router-dom";
+import Today from "./today"
 import FiveDay from "./five_day";
 import Navbar from "./navbar";
 import Loading from "./loading";
 import { fetchReverse } from "../util/city_api_util";
-import { fetchForecast } from "../util/weather_api_util";
+import { fetchWeather, fetchForecast } from "../util/weather_api_util";
 import { 
   kToF,
-  concatCityName 
+  concatCityName,
+  convertWindDir,
+  getTime
 } from "../util/functions_util";
 
 
@@ -19,7 +22,6 @@ const Show = () => {
   const [currCity, setCurrCity] = React.useState({});
 
   useEffect(() => {
-    // getCurrentDetail();
     getForecast();
   }, [location])
 
@@ -27,29 +29,55 @@ const Show = () => {
     return fetchForecast(location.pathname).then(res => {
       let geo = [res.city.coord.lat, res.city.coord.lon];
       let hourly = res.list
-      // debugger
+      let [a, b, c, d, e] = hourly[0].sys.pod === 'd'
+        ? [0, 8, 16, 24, 32]
+        : [4, 12, 20, 28, 36];
       setForecast({
-        0: hourly[4],
-        1: hourly[12],
-        2: hourly[20],
-        3: hourly[28],
-        4: hourly[36],
+        0: hourly[a],
+        1: hourly[b],
+        2: hourly[c],
+        3: hourly[d],
+        4: hourly[e],
 
       });
-      return getCurrCity(geo)
+
+
+      return getCurrDetails(geo)
     });
   }
 
-  const getCurrCity = geo => {
-    return fetchReverse(geo).then(res => {
-      setCurrCity({
-        name: res[0].name,
-        state: res[0].state ? res[0].state : "",
-        country: res[0].country
+  const getCurrDetails = geo => {
+    getCurrCity(geo);
+    return getCurrWeather(geo);
+  }
+
+  const getCurrWeather = geo => {
+    return fetchWeather(geo).then(res => {
+      setCurrWeather({
+        sunrise: getTime(res.sys.sunrise),
+        sunset: getTime(res.sys.sunset),
+        feel: res.main.feels_like,
+        high: Math.round(res.main.temp_max),
+        low: Math.round(res.main.temp_min),
+        humidity: res.main.humidity,
+        pressure: res.main.pressure,
+        visibility: Math.round(res.visibility / 1000),
+        windDir: convertWindDir(res.wind.deg),
+        windSpeed: Math.round(res.wind.speed),
       });
       return setTimeout(() => {
         setLoading(false);
       }, "200");
+    })
+  }
+
+  const getCurrCity = geo => {
+    return fetchReverse(geo).then(res => {
+      return setCurrCity({
+        name: res[0].name,
+        state: res[0].state ? res[0].state : "",
+        country: res[0].country
+      });
     });
   }
 
@@ -63,9 +91,12 @@ const Show = () => {
             </div>
           : <React.Fragment>
             <div className="detail-card">
-              { concatCityName(currCity) }
+              <Today 
+                cityName={concatCityName(currCity)} 
+                weather={currWeather} /> 
             </div>
             <ol className="detail-card">
+              <li>Daily Forecast</li>
               { [0, 1, 2, 3, 4].map(i => (
                   <FiveDay day={forecast[i]} key={i} />
               ))}
