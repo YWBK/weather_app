@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Modal from "react-modal";
-import createStore from "runtime-memcache";
 import Loading from "./loading"
 import { fetchCities } from "../util/city_api_util";
 import { fetchWeather } from "../util/weather_api_util";
 import { 
   handleSubmit, 
   handleEnter, 
-  concatCityName 
+  concatCityName,
+  setSearchOptions,
 } from "../util/functions_util";
 
 const customStyles = {
@@ -17,7 +17,6 @@ const customStyles = {
     left: '25%',
     right: '25%',
     bottom: '25%',
-    // transform: 'translate(-50%, -50%)',
   },
 }
 
@@ -47,13 +46,7 @@ const CityCard = ({ idx, cityHolder, citiesDict }) => {
   const getCities = () => {
     fetchCities(query).then(res => {
       setQuery("");
-      return setOptions(
-        res.map(cityGeo => {
-          const cityName = concatCityName(cityGeo);
-          const geo = [cityGeo['lat'], cityGeo['lon']]
-          return { cityName: cityName, geo: geo}
-        })
-      )
+      return setOptions(setSearchOptions(res));
     })
   }
 
@@ -121,12 +114,7 @@ const CityCard = ({ idx, cityHolder, citiesDict }) => {
                 className="card-summary" >
                   <h2>
                     <Link 
-                      to={{
-                        pathname: `/${weatherData.id}`,
-                        state: {
-                          weatherData: weatherData
-                        }
-                      }} 
+                      to={`/${weatherData.id}`} 
                       className="detail-link" >
                       {weatherData.location}
                     </Link>
