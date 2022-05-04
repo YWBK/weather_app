@@ -87,26 +87,24 @@ const Show = () => {
   return (
     <React.Fragment>
       <Navbar />
-      <div className="detail-wrapper">
         { loading 
-          ? <div className="detail-card">
+          ? <div className="detail-card" id="today-card">
               <Loading />
             </div>
           : <React.Fragment>
-            <div className="detail-card">
+            <div className="detail-card" id="today-card">
               <Today 
                 cityName={concatCityName(currCity)} 
                 weather={currWeather} /> 
             </div>
             <ol className="detail-card">
-              <li>Daily Forecast</li>
+              <li className="detail-title">Daily Forecast</li>
               { [0, 1, 2, 3, 4].map(i => (
                   <FiveDay day={forecast[i]} key={i} />
               ))}
             </ol>
           </React.Fragment>
         }
-        </div>
     </React.Fragment>
   )
 }

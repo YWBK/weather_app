@@ -5,23 +5,44 @@ const Today = ({ cityName, weather }) => {
   // debugger
   return (
     <React.Fragment>
-      <div className='today-title'>Weather Today in { cityName }</div>
-      <div className='today-detail'>
-        <div>{ weather.temp }°</div>
-        <div>Feels Like { weather.feel }°</div>
-        <div>
+      <div className='detail-title'>
+        Weather Today in { cityName }
+      </div>
+      <ul className='today-detail'>
+        <li className='detail-item' id='detail-temp'>
+          <p>{ weather.temp }°</p>
+          <p id='detail-feels-like'>Feels Like { weather.feel }°</p>
+        </li>
+        <li className='detail-item'>
           <img src={ weather.icon } alt={ weather.main} />
           { weather.main }
-        </div>
-        <div>High / Low { weather.high}° { weather.low }°</div>
-      </div>
-      <div className='today-detail'>
-        <div>Sunrise / Sunset { weather.sunrise} { weather.sunset }</div>
-        <div>Wind { weather.windDir} { weather.windSpeed} mph </div>
-        <div>Humidity { weather.humidity } %</div>
-        <div>Visibility { weather.visibility } km</div>
-        <div>Pressure { weather.pressure } hPa</div>
-      </div>
+        </li>
+        <li className='detail-item'>
+          <p>High / Low { weather.high}° / { weather.low }°</p>
+        </li>
+      </ul>
+      <ul className='today-detail'>
+        <li className='detail-item'>
+          <p className='detail-caption'>Sunrise / Sunset</p>
+          <p>{ weather.sunrise} / { weather.sunset }</p>
+        </li>
+        <li className='detail-item'>
+          <p className='detail-caption'>Wind</p> 
+          <p>{ weather.windDir} { weather.windSpeed} mph</p>
+        </li>
+        <li className='detail-item'>
+          <p className='detail-caption'>Humidity</p> 
+          <p>{ weather.humidity } %</p>
+        </li>
+        <li className='detail-item'>
+          <p className='detail-caption'>Visibility</p>
+          <p>{ weather.visibility } km</p>
+        </li>
+        <li className='detail-item'>
+          <p className='detail-caption'>Pressure</p>
+          <p>{ weather.pressure } hPa</p>
+        </li>
+      </ul>
     </React.Fragment>
   )
 }
