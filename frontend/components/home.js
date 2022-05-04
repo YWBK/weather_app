@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./navbar";
 import CityCard from "./city_card";
-import createStore from "runtime-memcache";
 
 const Home = () => {
-  // const config = {
-  //   policy: "lru",
-  //   lruSize: 5,
-  // };
+  // useEffect 
+  // check if anything in localStorage
+  // if not add const nyc to localStorage
 
-  // const userCache = createStore(config);
+  // useEffect(() => {
+  //   window.localStorage.getItem(0)
+  // })
 
   const nyc = [
     "Manhattan, NY, US", 

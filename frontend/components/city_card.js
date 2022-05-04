@@ -11,15 +11,15 @@ import {
   concatCityName 
 } from "../util/functions_util";
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: '25%',
-    bottom: '25%',
-    transform: 'translate(-50%, -50%)',
-  },
-}
+// const customStyles = {
+//   content: {
+//     top: '50%',
+//     left: '50%',
+//     right: '25%',
+//     bottom: '25%',
+//     transform: 'translate(-50%, -50%)',
+//   },
+// }
 
 const CityCard = ({ idx, cityHolder }) => {
   const [query, setQuery] = React.useState(cityHolder);
@@ -86,7 +86,7 @@ const CityCard = ({ idx, cityHolder }) => {
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
-              style={customStyles}
+              // style={customStyles}
               contentLabel="Example Modal" >
                 <div 
                   className="search">

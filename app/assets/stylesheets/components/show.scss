@@ -1,15 +1,47 @@
-.detail-wrapper {
-  // width: 100%;
-  margin: 0 2em 0 2em;
-}
-
 .detail-card {
   border-radius: 0.5em;
-  margin: 2em 1em 0 1em;
+  margin: 0 2em 2em 2em;
   padding: 1em;
 
   background-color: $dark-blue;
   color: $white;
+
+  overflow: auto;
+}
+
+.detail-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5em;
+}
+
+.today-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 80%;
+  padding: 0.5em 0 0.5em 0;
+}
+
+.detail-caption {
+  flex-grow: 1;
+}
+
+#detail-temp {
+  font-size: 1.7em;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#detail-feels-like {
+  font-size: 0.6em;
+  margin-top: 0.5em;
 }
 
 .five-day {
