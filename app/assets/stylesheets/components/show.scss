@@ -1,0 +1,28 @@
+.detail-wrapper {
+  // width: 100%;
+  margin: 0 2em 0 2em;
+}
+
+.detail-card {
+  border-radius: 0.5em;
+  margin: 2em 1em 0 1em;
+  padding: 1em;
+
+  background-color: $dark-blue;
+  color: $white;
+}
+
+.five-day {
+  border-bottom: 1px solid $light-gray;
+  padding: 0.5em 0 0.5em 0;
+
+  &:last-of-type {
+    border: none;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

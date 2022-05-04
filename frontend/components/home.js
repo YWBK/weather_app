@@ -12,10 +12,10 @@ const Home = () => {
   // const userCache = createStore(config);
 
   const nyc = [
-    // "Manhattan, NY", 
-    // "Queens, NY", 
-    // "Brooklyn, NY", 
-    // "Bronx, NY", 
+    "Manhattan, NY, US", 
+    "Queens, NY, US",
+    "Brooklyn, NY, US", 
+    "Bronx, NY, US", 
     "Staten Island, NY, US"];
 
   return (

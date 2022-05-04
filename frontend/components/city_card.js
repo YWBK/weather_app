@@ -5,6 +5,11 @@ import createStore from "runtime-memcache";
 import Loading from "./loading"
 import { fetchCities } from "../util/city_api_util";
 import { fetchWeather } from "../util/weather_api_util";
+import { 
+  handleSubmit, 
+  handleEnter, 
+  concatCityName 
+} from "../util/functions_util";
 
 const customStyles = {
   content: {
@@ -52,25 +57,6 @@ const CityCard = ({ idx, cityHolder }) => {
     })
   }
 
-  const concatCityName = (cityGeo) => {
-    return (cityGeo['state']
-      ? `${cityGeo['name']}, ${cityGeo['state']}, ${cityGeo['country']}`
-      : `${cityGeo['name']}, ${cityGeo['country']}`
-    );
-  }
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    return getCities();
-  }
-
-  const handleEnter = e => {
-    if (e.key === 'Enter') {
-      e.target.blur();
-      return handleSubmit(e);
-    }
-  }
-
   const handleSelect = (geo, city)  => {
     setOptions([]);
     return fetchWeather(geo)
@@ -80,7 +66,7 @@ const CityCard = ({ idx, cityHolder }) => {
           id: res.id,
           main: res.weather[0].main,
           icon: res.weather[0].icon,
-          temp: kelvinToFahrenheit(res.main.temp)
+          temp: Math.round(res.main.temp)
         })
         closeModal();
         setLoading(true);
@@ -88,11 +74,6 @@ const CityCard = ({ idx, cityHolder }) => {
           setLoading(false);
         }, "200");
       })
-  }
-
-  const kelvinToFahrenheit = k => {
-    const f = Math.round(((k - 273.15) * 9) / 5 + 32);
-    return f;
   }
 
   return (
@@ -113,12 +94,12 @@ const CityCard = ({ idx, cityHolder }) => {
                       type="text" 
                       placeholder="Search city"
                       value={query}
-                      onKeyDown={ e => handleEnter(e) }
+                      onKeyDown={ e => handleEnter(e, getCities) }
                       onChange={ e => setQuery(e.currentTarget.value) } />
                     <input 
                       type="submit"
                       value="Search" 
-                      onClick={ e => handleSubmit(e) } />
+                      onClick={ e => handleSubmit(e, getCities) } />
                 </div>
                 <ul className="search-options">
                   { options.map((option, idx) => {

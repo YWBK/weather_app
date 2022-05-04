@@ -1,7 +1,7 @@
 input {
   flex-grow: 2;
   margin-bottom: 0.5em;
-  border: none;
+  border: 1px solid $light-gray;
   border-radius: 0.4em;
   &:focus {
     outline: 1px solid $darker-blue;
