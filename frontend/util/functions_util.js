@@ -50,3 +50,14 @@ export const getTime = timestamp => {
   let d = new Date(timestamp * 1000);
   return d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric' });
 }
+
+export const setSearchOptions = json => {
+  if (json.length < 1) {
+    return [{ cityName: 'No results. Search another city.'}];
+  }
+  return json.map(cityGeo => {
+    const cityName = concatCityName(cityGeo);
+    const geo = [cityGeo['lat'], cityGeo['lon']];
+    return { cityName: cityName, geo: geo};
+  })
+}
