@@ -1,14 +1,16 @@
+
 .search {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-bottom: 0.5em;
+  margin: 1em 1em 0.5em 1em;
 }
 
 .search-options {
   position: absolute;
   background: $white;
   border-radius: 0.4em;
+  margin: 0 1em 1em 1em;
   color: $black;
   width: 90%;
 
