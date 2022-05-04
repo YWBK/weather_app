@@ -3,29 +3,35 @@ import Navbar from "./navbar";
 import CityCard from "./city_card";
 
 const Home = () => {
-  // useEffect 
-  // check if anything in localStorage
-  // if not add const nyc to localStorage
+  const [citiesDict, setCitiesDict] = React.useState({});
 
-  // useEffect(() => {
-  //   window.localStorage.getItem(0)
-  // })
-
-  const nyc = [
-    "Manhattan, NY, US", 
-    "Queens, NY, US",
-    "Brooklyn, NY, US", 
-    "Bronx, NY, US", 
-    "Staten Island, NY, US"];
+  useEffect(() => {
+    let cities = window.localStorage.getItem('cities')
+    if (!!cities) {
+      cities = JSON.parse(cities)
+      setCitiesDict(cities);
+    } else {
+      cities = {
+        0: "Manhattan, NY, US", 
+        1: "Queens, NY, US",
+        2: "Brooklyn, NY, US", 
+        3: "Bronx, NY, US", 
+        4: "Staten Island, NY, US"};
+      
+      setCards(cities);
+      window.localStorage.setItem('cities', JSON.stringify(cities));
+    }
+  }, [])
 
   return (
     <React.Fragment>
       <Navbar />
-      {nyc.map((borough, idx) => (
+      {Object.values(citiesDict).map((city, idx) => (
         <CityCard 
           key={idx}
           idx={idx}
-          cityHolder={borough} />  
+          cityHolder={city}
+          citiesDict={citiesDict} />  
     ))}
     </React.Fragment>
   )
