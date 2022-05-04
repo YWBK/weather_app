@@ -12,11 +12,21 @@
 
 .home-link-wrapper {
   grid-row: 2;
-  grid-column: 1, span 2;
+  grid-column: 1 / span 5;
 }
 
 .city-card {
   grid-row: 3;
+}
+
+.detail-wrapper {
+  grid-row: 3 / span 5;
+  grid-column: 1/ span 5;
+}
+
+.five-day {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
 }
 
 

@@ -23,3 +23,12 @@ export const fetchCities = query => {
     url: `api/cities?city=${city}${stateQuery}${countryQuery}`
   }))
 }
+
+export const fetchReverse = geo => {
+  const [lat, lon] = geo;
+  return ($.ajax({
+    method: 'GET',
+    url: `api/cities?lat=${lat}&lon=${lon}`
+  }))
+}
+
