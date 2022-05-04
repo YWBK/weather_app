@@ -21,7 +21,7 @@ const customStyles = {
   },
 }
 
-const CityCard = ({ idx, cityHolder }) => {
+const CityCard = ({ idx, cityHolder, citiesDict }) => {
   const [query, setQuery] = React.useState(cityHolder);
   const [options, setOptions] = React.useState([]);
   const [weatherData, setWeatherData] = React.useState({});
@@ -57,8 +57,12 @@ const CityCard = ({ idx, cityHolder }) => {
     })
   }
 
-  const handleSelect = (geo, city)  => {
+  const handleSelect = (geo, city, idx, citiesDict)  => {
     setOptions([]);
+    if (citiesDict && citiesDict[idx] !== city) {
+      citiesDict[idx] = city;
+      window.localStorage.setItem('cities', JSON.stringify(citiesDict));
+    }
     return fetchWeather(geo)
       .then(res => {
         setWeatherData({
@@ -102,11 +106,11 @@ const CityCard = ({ idx, cityHolder }) => {
                       onClick={ e => handleSubmit(e, getCities) } />
                 </div>
                 <ul className="search-options">
-                  { options.map((option, idx) => {
+                  { options.map((option, i) => {
                     return (
                       <li 
-                        key={idx}
-                        onClick={ () => handleSelect(option.geo, option.cityName) } >
+                        key={i}
+                        onClick={ () => handleSelect(option.geo, option.cityName, idx, citiesDict) } >
                           {option.cityName}
                       </li>
                     )
