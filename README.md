@@ -16,7 +16,7 @@ Users are first taken to the home page where they can view weather summaries for
 
 ## Features
 
-### City Cards
+### Search Bar
 
 Users can use the main search bar to search for and navigate to a different city's show page. The search bar makes use of the `useEffect` and `useMemo` hooks in combination with `lodash.debounce` to automatically make an API call to the backend and set the search result options.
 
@@ -46,6 +46,8 @@ Users can use the main search bar to search for and navigate to a different city
   }
 ```
 
+### City Cards
+
 Initially, city cards are set to the five boroughs of NYC. Users can choose to search for and set a different city to any card through a modal. City cards make use of `Window.localStorage` to persist users' selected city cards. 
 
 ```js
@@ -72,6 +74,8 @@ Initially, city cards are set to the five boroughs of NYC. Users can choose to s
       })
   }
 ```
+
+### API Endpoints
 
 API endpoints use the REST Client gem to make API calls to OpenWeather. There are two controllers, CitiesController and WeathersController. 
 
