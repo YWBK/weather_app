@@ -7,7 +7,7 @@ const Error = () => {
       <h1>Page Not Found</h1>
       <Link to="/">Return to Home</Link>
     </React.Fragment>
-  )
-}
+  );
+};
 
-export default Error
+export default Error;

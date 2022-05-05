@@ -1,79 +1,77 @@
-import React from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import { debounce } from "lodash";
 import { fetchCities } from "../util/city_api_util";
-import { concatCityName, setSearchOptions } from "../util/functions_util";
+import { setSearchOptions } from "../util/functions_util";
 import { fetchWeather } from "../util/weather_api_util";
 
 const NavSearch = () => {
-  const [query, setQuery] = React.useState("");
-  const [options, setOptions] = React.useState([]);
-  const [listOpen, setListOpen] = React.useState(false);
-  const optionsList = React.useRef(null);
+  const [query, setQuery] = useState("");
+  const [options, setOptions] = useState([]);
+  const [listOpen, setListOpen] = useState(false);
+  const optionsList = useRef(null);
   const history = useHistory();
 
-  const fetch = React.useMemo(() => {
-    return debounce(query => {
-      fetchCities(query).then(res => {
-        setOptions(setSearchOptions(res))
+  const fetch = useMemo(() => {
+    return debounce((query) => {
+      fetchCities(query).then((res) => {
+        setOptions(setSearchOptions(res));
         return setListOpen(true);
-      })
-    }, 300)
-  }, [])
+      });
+    }, 300);
+  }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (query === "") return undefined;
     return fetch(query);
-  }, [query])
+  }, [query]);
 
-  const closeList = e => {
+  const closeList = (e) => {
     setQuery("");
-    if (optionsList.current 
-      && listOpen 
-      && !optionsList.current.contains(e.target)) {
-        return setListOpen(false);
-      }
-  }
+    if (
+      optionsList.current &&
+      listOpen &&
+      !optionsList.current.contains(e.target)
+    ) {
+      return setListOpen(false);
+    }
+  };
 
-  document.addEventListener('mousedown', closeList);
+  document.addEventListener("mousedown", closeList);
 
-  const handleSelect = (geo, city)  => {
+  const handleSelect = (geo) => {
     setOptions([]);
     setQuery("");
-    return fetchWeather(geo)
-      .then(res => {
-        let id = res.id;
-        history.push(`/${id}`)
-      })
-  }
+    return fetchWeather(geo).then((res) => {
+      let id = res.id;
+      history.push(`/${id}`);
+    });
+  };
 
   return (
-      <div className="nav-search-wrapper">
-        <input
-          type="text"
-          placeholder="search city"
-          value={query}
-          className="nav-search-bar"
-          onChange={ e => setQuery(e.currentTarget.value)}
-        />
-        { listOpen
-            ? <ul className="nav-search-options" ref={optionsList}>
-                { options.map((option, i) => {
-                  return (
-                    <li 
-                      key={i}
-                      onClick={ () => handleSelect(option.geo, option.cityName)}
-                    >
-                        {option.cityName}
-                    </li>
-                  )
-                })}
-              </ul>
-            : <ul className="search-options" ></ul>
-        }
-        
-      </div>
-  )
-}
+    <div className="nav-search-wrapper">
+      <input
+        type="text"
+        placeholder="search city"
+        value={query}
+        className="nav-search-bar"
+        onChange={(e) => setQuery(e.currentTarget.value)}
+      />
+      {listOpen ? (
+        <ul className="nav-search-options" ref={optionsList}>
+          {options.map((option, i) => {
+            return (
+              <li key={i} onClick={() => handleSelect(option.geo)}>
+                {option.cityName}
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <ul className="search-options"></ul>
+      )}
+    </div>
+  );
+};
 
-export default NavSearch
+export default NavSearch;

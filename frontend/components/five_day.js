@@ -1,8 +1,8 @@
 import React from "react";
 import { convertWindDir, getDayAndDate } from "../util/functions_util";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const FiveDay = ({day}) => {
+const FiveDay = ({ day }) => {
   let date = getDayAndDate(day.dt);
   let temp = Math.round(day.main.temp);
   let icon = day.weather[0].icon;
@@ -13,26 +13,27 @@ const FiveDay = ({day}) => {
 
   return (
     <li className="five-day">
-      <div>{ date }</div>
-      <div>{ temp } { temp ? '°F' : ''}</div>
+      <div>{date}</div>
+      <div>
+        {temp} {temp ? "°F" : ""}
+      </div>
       <div className="icon">
-        <img src={`http://openweathermap.org/img/w/${icon}.png`} alt={desc}/>
-        <div>{ desc }</div>
+        <img src={`http://openweathermap.org/img/w/${icon}.png`} alt={desc} />
+        <div>{desc}</div>
       </div>
       <div>
-        <FontAwesomeIcon 
+        <FontAwesomeIcon
           icon="fa-solid fa-cloud-showers-heavy"
-          className="icon" /> 
-        { precip } %
+          className="icon"
+        />
+        {precip} %
       </div>
       <div>
-        <FontAwesomeIcon 
-          icon="fa-solid fa-wind"
-          className="icon" /> 
-        { windDir } { windSpeed } mph
+        <FontAwesomeIcon icon="fa-solid fa-wind" className="icon" />
+        {windDir} {windSpeed} mph
       </div>
     </li>
-  )
-}
+  );
+};
 
 export default FiveDay;

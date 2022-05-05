@@ -14,6 +14,22 @@ Users are first taken to the home page where they can view weather summaries for
 - OpenWeather free APIs
 - Icons from [Font Awesome](https://fontawesome.com/)
 
+## Getting Started
+
+Input the following terminal commands to setup and start using Weather App.
+
+```
+bundle install
+bundle exec rails db:create
+touch config/master.key
+```
+Save the provided key in `master.key`
+```
+npm run install
+npm run start
+bundle exec rails s
+```
+
 ## Features
 
 ### Search Bar
@@ -21,29 +37,28 @@ Users are first taken to the home page where they can view weather summaries for
 Users can use the main search bar to search for and navigate to a different city's show page. The search bar makes use of the `useEffect` and `useMemo` hooks in combination with `lodash.debounce` to automatically make an API call to the backend and set the search result options.
 
 ```js
-  const fetch = React.useMemo(() => {
-    return debounce(query => {
-      fetchCities(query).then(res => {
-        setOptions(setSearchOptions(res))
-        return setListOpen(true);
-      })
-    }, 300)
-  }, [])
+const fetch = useMemo(() => {
+  return debounce((query) => {
+    fetchCities(query).then((res) => {
+      setOptions(setSearchOptions(res));
+      return setListOpen(true);
+    });
+  }, 300);
+}, []);
 
-  React.useEffect(() => {
-    if (query === "") return undefined;
-    return fetch(query);
-  }, [query])
+useEffect(() => {
+  if (query === "") return undefined;
+  return fetch(query);
+}, [query]);
 
-  const handleSelect = geo  => {
-    setOptions([]);
-    setQuery("");
-    return fetchWeather(geo)
-      .then(res => {
-        let id = res.id;
-        history.push(`/${id}`)
-      })
-  }
+const handleSelect = (geo) => {
+  setOptions([]);
+  setQuery("");
+  return fetchWeather(geo).then((res) => {
+    let id = res.id;
+    history.push(`/${id}`);
+  });
+};
 ```
 
 ### City Cards
@@ -51,28 +66,27 @@ Users can use the main search bar to search for and navigate to a different city
 Initially, city cards are set to the five boroughs of NYC. Users can choose to search for and set a different city to any card through a modal. City cards make use of `Window.localStorage` to persist users' selected city cards. 
 
 ```js
-  const handleSelect = (geo, city, idx, citiesDict)  => {
-    setOptions([]);
-    if (citiesDict && citiesDict[idx] !== city) {
-      citiesDict[idx] = city;
-      window.localStorage.setItem('cities', JSON.stringify(citiesDict));
-    }
-    return fetchWeather(geo)
-      .then(res => {
-        setWeatherData({
-          location: city,
-          id: res.id,
-          main: res.weather[0].main,
-          icon: res.weather[0].icon,
-          temp: Math.round(res.main.temp)
-        })
-        closeModal();
-        setLoading(true);
-        return setTimeout(() => {
-          setLoading(false);
-        }, "200");
-      })
+const handleSelect = (geo, city, idx, citiesDict) => {
+  setOptions([]);
+  if (citiesDict && citiesDict[idx] !== city) {
+    citiesDict[idx] = city;
+    window.localStorage.setItem("cities", JSON.stringify(citiesDict));
   }
+  return fetchWeather(geo).then((res) => {
+    setWeatherData({
+      location: city,
+      id: res.id,
+      main: res.weather[0].main,
+      icon: res.weather[0].icon,
+      temp: Math.round(res.main.temp),
+    });
+    closeModal();
+    setLoading(true);
+    return setTimeout(() => {
+      setLoading(false);
+    }, "200");
+  });
+};
 ```
 
 ### API Endpoints
