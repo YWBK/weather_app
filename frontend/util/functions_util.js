@@ -1,5 +1,5 @@
 export const handleSubmit = (e, req) => {
-  // debugger
+  // 
   e.preventDefault();
   return req();
 }
@@ -38,16 +38,19 @@ export const convertWindDir = deg => {
   }
 }
 
-export const getDayAndDate = fullDate => {
+export const getDayAndDate = timestamp => {
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  let d = new Date(fullDate);
+  let d = new Date(timestamp * 1000);
   let day = days[d.getDay()];
   let date = d.getDate();
   return `${day} ${date}`;
 }
 
-export const getTime = timestamp => {
-  let d = new Date(timestamp * 1000);
+export const getTime = (timestamp, timezone) => {
+  let localTimezone = new Date(timestamp * 1000);
+  let offset = localTimezone.getTimezoneOffset() * 60;
+  let localOffset = timezone + offset;
+  let d = new Date((timestamp + localOffset) * 1000);
   return d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric' });
 }
 

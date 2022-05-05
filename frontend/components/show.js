@@ -1,4 +1,4 @@
-import React, { useEffect, useInsertionEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Today from "./today"
 import FiveDay from "./five_day";
@@ -7,7 +7,6 @@ import Loading from "./loading";
 import { fetchReverse } from "../util/city_api_util";
 import { fetchWeather, fetchForecast } from "../util/weather_api_util";
 import { 
-  kToF,
   concatCityName,
   convertWindDir,
   getTime
@@ -41,7 +40,6 @@ const Show = () => {
 
       });
 
-
       return getCurrDetails(geo)
     });
   }
@@ -57,8 +55,8 @@ const Show = () => {
         temp: res.main.temp,
         icon: `http://openweathermap.org/img/w/${res.weather[0].icon}.png`,
         main: res.weather[0].main,
-        sunrise: getTime(res.sys.sunrise),
-        sunset: getTime(res.sys.sunset),
+        sunrise: getTime(res.sys.sunrise, res.timezone),
+        sunset: getTime(res.sys.sunset, res.timezone),
         feel: res.main.feels_like,
         high: Math.round(res.main.temp_max),
         low: Math.round(res.main.temp_min),
