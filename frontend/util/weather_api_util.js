@@ -10,6 +10,6 @@ export const fetchForecast = cityId => {
   const id = cityId.substring(1);
   return ($.ajax({
     method: 'GET',
-    url: `api/weather?cityId=${id}`
+    url: `api/weather?city_id=${id}`
   }))
 }

@@ -1,4 +1,3 @@
-require "byebug"
 class Api::CitiesController < ApplicationController
   require "rest-client"
   require "json"
