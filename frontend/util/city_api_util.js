@@ -1,8 +1,7 @@
-
-export const fetchCities = query => {
-  const cityStateCountry = query.split(",").map(part => part.trim());
+export const fetchCities = (query) => {
+  const cityStateCountry = query.split(",").map((part) => part.trim());
   let city, state, country;
-  switch(cityStateCountry.length) {
+  switch (cityStateCountry.length) {
     case 1:
       [city] = cityStateCountry;
       break;
@@ -15,20 +14,19 @@ export const fetchCities = query => {
     default:
       break;
   }
-  const stateQuery = state ? `&state=${state}` : '';
-  const countryQuery = country ? `&country=${country}` : '';
+  const stateQuery = state ? `&state=${state}` : "";
+  const countryQuery = country ? `&country=${country}` : "";
 
-  return ($.ajax({
-    method: 'GET',
-    url: `api/cities?city=${city}${stateQuery}${countryQuery}`
-  }))
-}
+  return $.ajax({
+    method: "GET",
+    url: `api/cities?city=${city}${stateQuery}${countryQuery}`,
+  });
+};
 
-export const fetchReverse = geo => {
+export const fetchReverse = (geo) => {
   const [lat, lon] = geo;
-  return ($.ajax({
-    method: 'GET',
-    url: `api/cities?lat=${lat}&lon=${lon}`
-  }))
-}
-
+  return $.ajax({
+    method: "GET",
+    url: `api/cities?lat=${lat}&lon=${lon}`,
+  });
+};

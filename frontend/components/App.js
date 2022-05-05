@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 import Home from "./home";
 import Show from "./show";
 import Error from "./error";
-
 
 const App = () => {
   return (
@@ -14,7 +13,7 @@ const App = () => {
         <Route component={Error} />
       </Switch>
     </div>
-  )
-}
+  );
+};
 
 export default App;
