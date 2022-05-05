@@ -25,7 +25,7 @@ touch config/master.key
 ```
 Save the provided key in `master.key`
 ```
-npm run install
+npm install
 npm run start
 bundle exec rails s
 ```
