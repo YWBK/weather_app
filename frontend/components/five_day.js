@@ -3,7 +3,7 @@ import { convertWindDir, getDayAndDate } from "../util/functions_util";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 
 const FiveDay = ({day}) => {
-  let date = getDayAndDate(day.dt_txt.slice(0,10));
+  let date = getDayAndDate(day.dt);
   let temp = Math.round(day.main.temp);
   let icon = day.weather[0].icon;
   let desc = day.weather[0].main;
@@ -32,7 +32,6 @@ const FiveDay = ({day}) => {
         { windDir } { windSpeed } mph
       </div>
     </li>
-
   )
 }
 
