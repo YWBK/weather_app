@@ -1,8 +1,9 @@
+## [Live Link](https://weather-app-ywbk.herokuapp.com/)
+
 ## Background
 
 Weather App is a free weather app that provides up to date weather and forecasts from [OpenWeather](https://openweathermap.org/).
 Users are first taken to the home page where they can view weather summaries for 5 different cities. Users may also click for view details or use the search bar to find and view a city's weather details.
-
 
 ## Technologies Used
 
