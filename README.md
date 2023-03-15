@@ -24,7 +24,7 @@ bundle install
 bundle exec rails db:create
 touch config/master.key
 ```
-Save the provided key in `master.key`
+Save the private key in `master.key`
 ```
 npm install
 npm run start
